@@ -1,0 +1,33 @@
+services:
+  cadquery-jupyter:
+    build:
+      context: ./cadquery
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./:/workspace
+    working_dir: /workspace
+
+  ai-jupyter:
+    build:
+      context: ./ai
+    ports:
+      - "8889:8888"
+    volumes:
+      - ./:/workspace
+    working_dir: /workspace
+    # GPUがあるWindowsでは効く。Mac(Intel)では無視される
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+  audiobook-tools:
+    build:
+      context: ./audiobook
+    volumes:
+      - ./:/workspace
+    working_dir: /workspace
+    environment:
+      - ENGINE_URL=http://host.docker.internal:50021
