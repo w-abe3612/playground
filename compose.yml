@@ -22,12 +22,3 @@ services:
         reservations:
           devices:
             - capabilities: [gpu]
-
-  audiobook-tools:
-    build:
-      context: ./audiobook
-    volumes:
-      - ./:/workspace
-    working_dir: /workspace
-    environment:
-      - ENGINE_URL=http://host.docker.internal:50021
